@@ -12,13 +12,15 @@ static NUMERICS: [char; 9] = [
 ];
 
 fn main() {
-    // let input = read_in_data("01.1");
+    let input = read_in_data("01.1");
 
-    // let strings: Vec<String> = get_strings(input);
+    let mut strings: Vec<String> = get_strings(input);
 
-    // let sums = get_sum(&strings);
+    strings = remove_non_numerics(&strings);
 
-    // println!("sum 01.1: {}", sums);
+    let sums = get_sum(&strings);
+
+    println!("sum 01.1: {}", sums);
 
     let input = read_in_data("01.2");
 
@@ -56,8 +58,6 @@ fn replace_named_numbers(strings: &Vec<String>) -> Vec<String> {
         
         let numeric_string = find_and_replace_first_numeric(value);
         let numeric_string = find_and_replace_last_numeric(&numeric_string);
-
-        println!("{}", numeric_string);
 
         result.push(numeric_string);
     }
