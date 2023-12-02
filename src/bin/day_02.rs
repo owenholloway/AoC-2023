@@ -16,7 +16,6 @@ fn main() {
     let mut games_sum = 0;
     for game in &games {
         let game_result = game.game_could_exist(&marbles_existing);
-        println!("{:?}, {:?}", game_result, game);
         if game_result.0 {
             games_sum = games_sum + game_result.1;
         }
@@ -133,7 +132,6 @@ impl Game {
                 }
             }
         }
-        println!("{:?}{:?}",self, (green_max, red_max, blue_max));
         (red_max as i64) * (green_max as i64) * (blue_max as i64)
     }
     
