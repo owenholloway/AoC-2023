@@ -7,9 +7,7 @@ static ASCII_LOWER: [char; 26] = [
     't', 'u', 'v', 'w', 'x', 'y', 'z',
 ];
 
-static NUMERICS: [char; 9] = [
-    '1', '2', '3', '4', '5', '6', '7', '8', '9',
-];
+static NUMERICS: [char; 9] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 fn main() {
     let input = read_in_data("01.1");
@@ -55,7 +53,6 @@ fn replace_named_numbers(strings: &Vec<String>) -> Vec<String> {
     let mut result: Vec<String> = vec![];
 
     for value in strings {
-        
         let numeric_string = find_and_replace_first_numeric(value);
         let numeric_string = find_and_replace_last_numeric(&numeric_string);
 
@@ -82,7 +79,6 @@ fn get_sum(strings: &Vec<String>) -> i64 {
 }
 
 fn find_and_replace_first_numeric(value: &String) -> String {
-    
     for scan in 0..value.len() {
         let string_scan = value[0..(scan + 1)].to_string();
         let result_string = replace_numerics(&string_scan);
@@ -96,14 +92,12 @@ fn find_and_replace_first_numeric(value: &String) -> String {
         if string_scan.len() > numeric_check.len() {
             return value.clone();
         }
-
     }
 
     value.clone()
 }
 
 fn find_and_replace_last_numeric(value: &String) -> String {
-    
     for scan in 0..value.len() {
         let string_scan = value[(value.len() - scan - 1)..(value.len())].to_string();
         let result_string = replace_numerics(&string_scan);
@@ -111,7 +105,6 @@ fn find_and_replace_last_numeric(value: &String) -> String {
         if string_scan.len() > result_string.len() {
             return value.clone().replace(&string_scan, &result_string);
         }
-
     }
 
     value.clone()
