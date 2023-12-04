@@ -14,6 +14,7 @@ fn main() {
     println!("{:?}", grid);
 }
 
+#[derive(Debug)]
 struct ScanParameters {
     min_w: usize,
     max_w: usize,
@@ -25,18 +26,21 @@ fn scan_and_sum(grid: &Vec<Vec<char>>) -> i64 {
     let result: i64 = 0;
     let params = ScanParameters {
         min_w: 0 as usize,
-        max_w: grid.len() - 1,
+        max_w: grid[0].len(),
         min_d: 0 as usize,
-        max_d: grid[0].len() - 1,
+        max_d: grid.len(),
     };
+
+    println!("{:?}", params);
 
     let mut value = String::new();
     let mut value_included = false;
 
-    for line_no in params.min_w..params.max_w {
+    for line_no in params.min_w..params.max_d - 1 {
         let mut item_skip_to = 0;
 
-        for item_no in params.min_d..params.max_d {
+        for item_no in params.min_d..params.max_w {
+            //print!("{}", grid[line_no][item_no]);
             if item_skip_to > item_no {
                 continue;
             }
@@ -44,6 +48,7 @@ fn scan_and_sum(grid: &Vec<Vec<char>>) -> i64 {
             let result = scan_from_index(grid, line_no, item_no, &params);
             item_skip_to = result.1.clone();
         }
+        println!();
     }
 
     result
@@ -64,7 +69,9 @@ fn scan_from_index(
     let mut item_offset = 0;
 
     loop {
-        if grid[line_no][item_no + item_offset] == '.' || SYMBOLS.contains(&grid[line_no][item_no])
+        if item_no + item_offset == params.max_w
+            || grid[line_no][item_no + item_offset] == '.'
+            || SYMBOLS.contains(&grid[line_no][item_no])
         {
             break;
         }
@@ -92,56 +99,57 @@ fn check_for_part(
     //...
     //.0.
     //..X
-    if !is_part && line_no < params.max_d && item_no < params.max_w {
+    if (!is_part) && line_no < params.max_d - 1 && item_no < params.max_w - 1 {
+        println!("{}", grid[line_no + 1][item_no + 1]);
         is_part = is_part || SYMBOLS.contains(&grid[line_no + 1][item_no + 1]);
     }
 
     //...
     //.0.
     //.X.
-    if !is_part && line_no < params.max_d {
+    if (!is_part) && line_no < params.max_d - 1 {
         is_part = is_part || SYMBOLS.contains(&grid[line_no + 1][item_no + 0]);
     }
 
     //...
     //.0.
     //X..
-    if !is_part && line_no < params.max_d && item_no > params.min_w {
+    if (!is_part) && line_no < params.max_d - 1 && item_no > params.min_w {
         is_part = is_part || SYMBOLS.contains(&grid[line_no + 1][item_no - 1]);
     }
 
     //...
     //X0.
     //...
-    if !is_part && item_no > params.min_w {
+    if (!is_part) && item_no > params.min_w {
         is_part = is_part || SYMBOLS.contains(&grid[line_no + 0][item_no - 1]);
     }
 
     //X..
     //.0.
     //...
-    if !is_part && line_no > params.min_d && item_no > params.min_w {
+    if (!is_part) && line_no > params.min_d && item_no > params.min_w {
         is_part = is_part || SYMBOLS.contains(&grid[line_no - 1][item_no - 1]);
     }
 
     //.X.
     //.0.
     //...
-    if !is_part && line_no > params.min_d {
+    if (!is_part) && line_no > params.min_d {
         is_part = is_part || SYMBOLS.contains(&grid[line_no - 1][item_no + 0]);
     }
 
     //..X
     //.0.
     //...
-    if !is_part && line_no > params.min_d && item_no < params.max_w {
+    if (!is_part) && line_no > params.min_d && item_no < params.max_w - 1 {
         is_part = is_part || SYMBOLS.contains(&grid[line_no - 1][item_no + 1]);
     }
 
     //...
     //.0X
     //...
-    if !is_part && item_no < params.max_w {
+    if (!is_part) && item_no < params.max_w - 1 {
         is_part = is_part || SYMBOLS.contains(&grid[0][item_no + 1]);
     }
 
