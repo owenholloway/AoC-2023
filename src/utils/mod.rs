@@ -1,5 +1,10 @@
 use std::{env, fs};
 
+pub static NUMERICS: [char; 9] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+pub static SYMBOLS: [char; 13] = [
+    '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '=', '+',
+];
+
 pub fn test() {
     println!("me hi");
 }
@@ -24,4 +29,12 @@ pub fn lines_to_vector(input: String) -> Vec<String> {
         strings.push(value.to_string());
     }
     strings
+}
+
+pub fn lines_to_single(input: String) -> String {
+    let mut result = String::new();
+    for value in input.split('\n') {
+        result = result + value;
+    }
+    result
 }

@@ -134,7 +134,6 @@ impl Game {
         }
         (red_max as i64) * (green_max as i64) * (blue_max as i64)
     }
-    
 }
 
 #[derive(Debug)]
